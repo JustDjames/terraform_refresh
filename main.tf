@@ -30,3 +30,9 @@ module "private_subnet" {
     sub_cidr = "10.1.2.0/24"
     name = "refresh_private_subnet"
 }
+
+module "nat_gateway" {
+    source = "./modules/nat_gateway"
+    eip_name = "refresh_nat_eip"
+    subnet = module.public_subnet.subnet_id
+}
