@@ -6,8 +6,13 @@ provider "aws"{
 module "vpc" {
     source = "./modules/vpc"
     cidr = "10.1.0.0/16"
-    vpc_name = "refresh_vpc"
-    ig_name = "refresh_ig"
+    name = "refresh_vpc"
+}
+
+module "internet_gateway" {
+    source = "./modules/ig_gateway"
+    vpc = module.vpc.vpc_id
+    name = "refresh_ig"
 }
 
 module "public_subnet" {
