@@ -3,6 +3,5 @@ variable "cidr" {
 }
 
 variable "name" {
-    default = "refresh_vpc"
-
+    default = "vpc"
 }

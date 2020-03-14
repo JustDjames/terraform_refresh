@@ -9,6 +9,12 @@ module "vpc" {
     name = "refresh_vpc"
 }
 
+module "internet_gateway" {
+    source = "./modules/ig_gateway"
+    vpc = module.vpc.vpc_id
+    name = "refresh_ig"
+}
+
 module "public_subnet" {
     source = "./modules/subnet"
     vpc = module.vpc.vpc_id
@@ -23,4 +29,10 @@ module "private_subnet" {
     public_ips = false
     sub_cidr = "10.1.2.0/24"
     name = "refresh_private_subnet"
+}
+
+module "nat_gateway" {
+    source = "./modules/nat_gateway"
+    eip_name = "refresh_nat_eip"
+    subnet = module.public_subnet.subnet_id
 }

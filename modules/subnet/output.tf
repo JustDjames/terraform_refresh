@@ -5,3 +5,7 @@ output "subnet_name" {
 output "subnet_block" {
     value = aws_subnet.subnet.cidr_block
 }
+
+output "subnet_id" {
+    value = aws_subnet.subnet.id
+}
