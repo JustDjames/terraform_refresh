@@ -36,3 +36,37 @@ module "nat_gateway" {
     eip_name = "refresh_nat_eip"
     subnet = module.public_subnet.subnet_id
 }
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = module.vpc.vpc_id
+
+  route {
+    cidr_block = module.public_subnet.subnet_block
+    gateway_id = module.internet_gateway.ig_id
+  }
+  tags = {
+      Name = "refresh_public_route_table"
+  }
+}
+
+resource "aws_route_table_association" "public_association" {
+  subnet_id      = module.public_subnet.subnet_id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = module.vpc.vpc_id
+
+  route {
+    cidr_block = module.private_subnet.subnet_block
+    gateway_id = module.internet_gateway.ig_id
+  }
+  tags = {
+      Name = "refresh_private_route_table"
+  }
+}
+
+resource "aws_route_table_association" "private_association" {
+  subnet_id      = module.private_subnet.subnet_id
+  route_table_id = aws_route_table.private_rt.id
+}
