@@ -41,7 +41,7 @@ resource "aws_route_table" "public_rt" {
   vpc_id = module.vpc.vpc_id
 
   route {
-    cidr_block = module.public_subnet.subnet_block
+    cidr_block = "0.0.0.0/0"
     gateway_id = module.internet_gateway.ig_id
   }
   tags = {
