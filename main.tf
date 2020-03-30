@@ -58,8 +58,8 @@ resource "aws_route_table" "private_rt" {
   vpc_id = module.vpc.vpc_id
 
   route {
-    cidr_block = module.private_subnet.subnet_block
-    gateway_id = module.internet_gateway.ig_id
+    cidr_block = "0.0.0.0/0"
+    gateway_id = module.nat_gateway.nat_id
   }
   tags = {
       Name = "refresh_private_route_table"
