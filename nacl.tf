@@ -119,7 +119,7 @@ resource "aws_network_acl_rule" "private_ssh_ingress" {
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = var.local_ip
+  cidr_block     = module.public_subnet.subnet_block
   from_port      = 22
   to_port        = 22
 }
