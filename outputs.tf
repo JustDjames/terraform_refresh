@@ -17,3 +17,7 @@ output "private_subnet_name" {
 output "private_subnet_block" {
     value = module.private_subnet.subnet_block
 }
+
+output "public_instance_ip" {
+    value = module.public_instance.instance_ip
+}
