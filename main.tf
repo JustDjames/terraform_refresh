@@ -70,3 +70,13 @@ resource "aws_route_table_association" "private_association" {
   subnet_id      = module.private_subnet.subnet_id
   route_table_id = aws_route_table.private_rt.id
 }
+
+module "public_instance" {
+  source          = "./modules/instance"
+  ami             = var.ami
+  key             = var.key_name
+  subnet          = module.public_subnet.subnet_id
+  security_groups = [aws_security_group.public_sg.id]
+  public_ip       = true
+  name            = "public_instance" 
+}
