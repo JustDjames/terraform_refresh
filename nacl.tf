@@ -83,16 +83,60 @@ resource "aws_network_acl_rule" "private_ephemeral_ingress" {
   to_port        = 65535
 }
 
+resource "aws_network_acl_rule" "public_outer_ephemeral_ingress" {
+  network_acl_id  = module.public_nacl.nacl_id
+  rule_number     = 800
+  egress          = false
+  protocol        = "tcp"
+  rule_action     = "allow"
+  cidr_block      = "0.0.0.0/0"
+  from_port       = 32768
+  to_port         = 65535
+}
+
+
+resource "aws_network_acl_rule" "public_outer_http_egress" {
+  network_acl_id = module.public_nacl.nacl_id
+  rule_number    = 100
+  egress         = true
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 80
+  to_port        = 80
+}
+
+resource "aws_network_acl_rule" "public_outer_https_egress" {
+  network_acl_id = module.public_nacl.nacl_id
+  rule_number    = 200
+  egress         = true
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 443
+  to_port        = 443 
+}
 # allows my pc to reply to requests from the public instances
 resource "aws_network_acl_rule" "public_ephemeral_egress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number = 100
-  egress      = true
-  protocol    = "tcp"
-  rule_action = "allow"
-  cidr_block  = var.local_ip
-  from_port   = 32768
-  to_port     = 65535
+  rule_number    = 300
+  egress         = true
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = var.local_ip
+  from_port      = 32768
+  to_port        = 65535
+}
+
+resource "aws_network_acl_rule" "public_outer_ephemeral_egress" {
+  network_acl_id = module.public_nacl.nacl_id
+  rule_number    = 400
+  egress         = true
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"
+  from_port      = 1024
+  to_port        = 65535
 }
 
 # private nacl
