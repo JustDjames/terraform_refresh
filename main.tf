@@ -80,3 +80,13 @@ module "public_instance" {
   public_ip       = true
   name            = "public_instance" 
 }
+
+module "private_instance" {
+  source          = "./modules/instance"
+  ami             = var.ami
+  key             = var.key_name
+  subnet          = module.private_subnet.subnet_id
+  security_groups = [aws_security_group.private_sg.id]
+  public_ip       = false
+  name            = "private_instance"
+} 
