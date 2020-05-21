@@ -16,32 +16,10 @@ resource "aws_network_acl_rule" "public_vpc_http_ingress" {
   to_port        = 80  
 }
 
-resource "aws_network_acl_rule" "public_vpc_http_egress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 100
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.vpc.vpc_block
-  from_port      = 80
-  to_port        = 80  
-}
-
 resource "aws_network_acl_rule" "public_vpc_https_ingress" {
   network_acl_id = module.public_nacl.nacl_id
   rule_number    = 200
   egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.vpc.vpc_block
-  from_port      = 443
-  to_port        = 443  
-}
-
-resource "aws_network_acl_rule" "public_vpc_https_egress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 200
-  egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
   cidr_block     = module.vpc.vpc_block
@@ -60,17 +38,6 @@ resource "aws_network_acl_rule" "public_outer_http_ingress" {
   to_port        = 80
 }
 
-resource "aws_network_acl_rule" "public_outer_http_egress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 300
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "0.0.0.0/0"
-  from_port      = 80
-  to_port        = 80
-}
-
 resource "aws_network_acl_rule" "public_outer_https_ingress" {
   network_acl_id = module.public_nacl.nacl_id
   rule_number    = 400
@@ -82,32 +49,10 @@ resource "aws_network_acl_rule" "public_outer_https_ingress" {
   to_port        = 443
 }
 
-resource "aws_network_acl_rule" "public_outer_https_egress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 400
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = "0.0.0.0/0"
-  from_port      = 443
-  to_port        = 443
-}
-
 resource "aws_network_acl_rule" "public_ssh_ingress" {
   network_acl_id = module.public_nacl.nacl_id
   rule_number    = 500
   egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = var.local_ip
-  from_port      = 22
-  to_port        = 22
-}
-
-resource "aws_network_acl_rule" "public_ssh_egress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 500
-  egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
   cidr_block     = var.local_ip
@@ -157,17 +102,6 @@ resource "aws_network_acl_rule" "private_vpc_http_ingress" {
   to_port        = 80
 }
 
-resource "aws_network_acl_rule" "private_vpc_http_egress" {
-  network_acl_id = module.private_nacl.nacl_id
-  rule_number    = 100
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.vpc.vpc_block
-  from_port      = 80
-  to_port        = 80
-}
-
 resource "aws_network_acl_rule" "private_vpc_https_ingress" {
   network_acl_id = module.private_nacl.nacl_id
   rule_number    = 200
@@ -179,32 +113,10 @@ resource "aws_network_acl_rule" "private_vpc_https_ingress" {
   to_port        = 443
 }
 
-resource "aws_network_acl_rule" "private_vpc_https_egress" {
-  network_acl_id = module.private_nacl.nacl_id
-  rule_number    = 200
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.vpc.vpc_block
-  from_port      = 443
-  to_port        = 443
-}
-
 resource "aws_network_acl_rule" "private_ssh_ingress" {
   network_acl_id = module.private_nacl.nacl_id
   rule_number    = 300
   egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = var.local_ip
-  from_port      = 22
-  to_port        = 22
-}
-
-resource "aws_network_acl_rule" "private_ssh_egress" {
-  network_acl_id = module.private_nacl.nacl_id
-  rule_number    = 300
-  egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
   cidr_block     = var.local_ip
