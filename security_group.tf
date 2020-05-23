@@ -67,11 +67,11 @@ resource "aws_security_group" "private_sg" {
     cidr_blocks = [module.public_subnet.subnet_block]
   }
   ingress {
-    description = "allow ssh access from your ip (WARNING: YOUR IP WILL CHANGE IF YOU RESTART YOUR PC )"
+    description = "allow ssh access from public instances"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.local_ip]
+    cidr_blocks = [module.public_subnet.subnet_block]
   }
   egress {
     from_port   = 0
