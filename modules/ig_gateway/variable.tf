@@ -1,6 +1,6 @@
 variable "vpc" {
-    type = string
+  type = string
 }
 variable "name" {
-    default = "Ig"
+  default = "Ig"
 }
