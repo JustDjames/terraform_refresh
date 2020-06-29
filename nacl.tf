@@ -5,31 +5,9 @@ module "public_nacl" {
   name        = "refresh_public_nacl"
 }
 
-resource "aws_network_acl_rule" "public_vpc_http_ingress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 100
-  egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.vpc.vpc_block
-  from_port      = 80
-  to_port        = 80
-}
-
-resource "aws_network_acl_rule" "public_vpc_https_ingress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 200
-  egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.vpc.vpc_block
-  from_port      = 443
-  to_port        = 443
-}
-
 resource "aws_network_acl_rule" "public_outer_http_ingress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 300
+  rule_number    = 100
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -40,7 +18,7 @@ resource "aws_network_acl_rule" "public_outer_http_ingress" {
 
 resource "aws_network_acl_rule" "public_outer_https_ingress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 400
+  rule_number    = 200
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -51,7 +29,7 @@ resource "aws_network_acl_rule" "public_outer_https_ingress" {
 
 resource "aws_network_acl_rule" "public_ssh_ingress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 500
+  rule_number    = 300
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -62,7 +40,7 @@ resource "aws_network_acl_rule" "public_ssh_ingress" {
 
 resource "aws_network_acl_rule" "public_icmp_ingress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 600
+  rule_number    = 400
   egress         = false
   protocol       = "icmp"
   rule_action    = "allow"
@@ -74,7 +52,7 @@ resource "aws_network_acl_rule" "public_icmp_ingress" {
 # allows public instances to reply to requests from the private instances
 resource "aws_network_acl_rule" "private_ephemeral_ingress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 700
+  rule_number    = 500
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
@@ -85,7 +63,7 @@ resource "aws_network_acl_rule" "private_ephemeral_ingress" {
 
 resource "aws_network_acl_rule" "public_outer_ephemeral_ingress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 800
+  rule_number    = 600
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
