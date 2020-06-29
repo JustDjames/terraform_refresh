@@ -179,14 +179,3 @@ resource "aws_network_acl_rule" "private_nat_ephemeral_egress" {
   from_port      = 1024
   to_port        = 65535
 }
-
-resource "aws_network_acl_rule" "private_public_ephemeral_egress" {
-  network_acl_id = module.private_nacl.nacl_id
-  rule_number    = 300
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = module.public_subnet.subnet_block
-  from_port      = 32768
-  to_port        = 65535
-}
