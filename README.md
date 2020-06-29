@@ -1,8 +1,36 @@
-to do: make this look good
-# terraform_refresh
-basic terraform which creates a vpc with two subnets (one private and one public), a instance in each subnet which is able to commicate with each other, a nat gateway and anything else which is needed
+# Terraform Refresh
 
+This is a basic terraform project which creates the following:
 
-requirements:
+* a VPC
+* two subnets (one private and one public)
+* two instances (one in each subnet)
+* a internet gateway to allow communication outside the VPC
+* a NAT gateway to allow instances in the private subnet to communicate with the internet (but not vise versa)
+* two route tables (for the public and private subnets)
+* two NACLs (same as above)
+* two security groups (one for public instances, one for private)
 
-you will need to find your ip address (just search my ip address in google)
+## Requirements:
+
+ * Terraform: instructions on installation [here](https://learn.hashicorp.com/terraform/getting-started/install.html)
+
+ * AWS access and secret keys: instructions on generating [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey)
+
+ * your ip addresss (just search my ip address in google)
+
+You can either install awscli using this [guide](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html), then configure a profile using this [guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html), or you can rewrite the provider block in the ``main.tf`` at the root of this project to use a different option such as ``access_key`` and ``secret_key`` instead of ``profile``. Possible options [here](https://www.terraform.io/docs/providers/aws/index.html).
+
+## Usage:
+
+Before you can run the terraform resources in this project, you will need to create a ``terraform.tfvars`` file in the root of this project. in this file you will need something like this:
+
+ ```
+ # only needed if you are using a awscli profile
+ profile = < your awscli profile >
+
+ local_ip = < your IP >
+ key_name = < name of the key pair you will use to ssh into the instances >
+ ```
+
+Once that is done you can run ``terraform apply`` to create the resources
