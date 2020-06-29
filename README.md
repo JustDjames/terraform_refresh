@@ -1,4 +1,3 @@
-to do: make this look good
 # Terraform Refresh
 
 This is a basic terraform project which creates the following:
