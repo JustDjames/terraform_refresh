@@ -49,26 +49,14 @@ resource "aws_network_acl_rule" "public_icmp_ingress" {
   icmp_code      = -1
 }
 
-# allows public instances to reply to requests from the private instances
-resource "aws_network_acl_rule" "private_ephemeral_ingress" {
+resource "aws_network_acl_rule" "public_outer_ephemeral_ingress" {
   network_acl_id = module.public_nacl.nacl_id
   rule_number    = 500
   egress         = false
   protocol       = "tcp"
   rule_action    = "allow"
-  cidr_block     = module.private_subnet.subnet_block
-  from_port      = 32768
-  to_port        = 65535
-}
-
-resource "aws_network_acl_rule" "public_outer_ephemeral_ingress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 600
-  egress         = false
-  protocol       = "tcp"
-  rule_action    = "allow"
   cidr_block     = "0.0.0.0/0"
-  from_port      = 32768
+  from_port      = 1024
   to_port        = 65535
 }
 
@@ -117,21 +105,9 @@ resource "aws_network_acl_rule" "bastion_ssh_egress" {
   to_port        = 22
 }
 
-# allows my pc to reply to requests from the public instances
-resource "aws_network_acl_rule" "public_ephemeral_egress" {
-  network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 500
-  egress         = true
-  protocol       = "tcp"
-  rule_action    = "allow"
-  cidr_block     = var.local_ip
-  from_port      = 32768
-  to_port        = 65535
-}
-
 resource "aws_network_acl_rule" "public_outer_ephemeral_egress" {
   network_acl_id = module.public_nacl.nacl_id
-  rule_number    = 600
+  rule_number    = 500
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
