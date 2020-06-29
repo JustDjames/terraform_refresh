@@ -158,9 +158,31 @@ resource "aws_network_acl_rule" "private_nat_ephemeral_ingress" {
   to_port        = 65535
 }
 
+resource "aws_network_acl_rule" "private_http_egress" {
+  network_acl_id = module.private_nacl.nacl_id
+  rule_number = 100
+  egress = true
+  protocol = "tcp"
+  rule_action = "allow"
+  cidr_block = "0.0.0.0/0"
+  from_port = 80
+  to_port = 80
+}
+
+resource "aws_network_acl_rule" "private_https_egress" {
+  network_acl_id = module.private_nacl.nacl_id
+  rule_number = 200
+  egress = true
+  protocol = "tcp"
+  rule_action = "allow"
+  cidr_block = "0.0.0.0/0"
+  from_port = 443
+  to_port = 443
+}
+
 resource "aws_network_acl_rule" "private_icmp_egress" {
   network_acl_id = module.private_nacl.nacl_id
-  rule_number    = 100
+  rule_number    = 300
   egress         = true
   protocol       = "icmp"
   rule_action    = "allow"
@@ -171,7 +193,7 @@ resource "aws_network_acl_rule" "private_icmp_egress" {
 
 resource "aws_network_acl_rule" "private_nat_ephemeral_egress" {
   network_acl_id = module.private_nacl.nacl_id
-  rule_number    = 200
+  rule_number    = 400
   egress         = true
   protocol       = "tcp"
   rule_action    = "allow"
