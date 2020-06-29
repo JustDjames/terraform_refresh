@@ -10,7 +10,7 @@ This is a basic terraform project which creates the following:
 * a NAT gateway to allow instances in the private subnet to communicate with the internet (but not vise versa)
 * two route tables (for the public and private subnets)
 * two NACLs (same as above)
-* two security groups (one for public instancesm, one for private)
+* two security groups (one for public instances, one for private)
 
 ## Requirements:
 
