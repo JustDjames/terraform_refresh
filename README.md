@@ -20,4 +20,4 @@ This is a basic terraform project which creates the following:
 
  * your ip addresss (just search my ip address in google)
 
-you will need to find your ip address (just search my ip address in google)
+You can either install awscli using this [guide](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html), then configure a profile using this [guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html), or you can rewrite the provider block in the ``main.tf`` at the root of this project to use a different option such as ``access_key`` and ``secret_key`` instead of ``profile``. Possible options [here](https://www.terraform.io/docs/providers/aws/index.html).
