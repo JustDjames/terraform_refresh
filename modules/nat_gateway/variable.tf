@@ -1,11 +1,11 @@
 variable "eip_name" {
-    default = "nat_eip"
+  default = "nat_eip"
 }
 
 variable "subnet" {
-    type = string
+  type = string
 }
 
 variable "nat_name" {
-    default = "nat_gw"
+  default = "nat_gw"
 }

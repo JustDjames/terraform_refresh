@@ -1,7 +1,7 @@
-resource "aws_internet_gateway" "ig"{
-    vpc_id = var.vpc
+resource "aws_internet_gateway" "ig" {
+  vpc_id = var.vpc
 
-    tags = {
-        Name = var.name
-    }
+  tags = {
+    Name = var.name
+  }
 }
